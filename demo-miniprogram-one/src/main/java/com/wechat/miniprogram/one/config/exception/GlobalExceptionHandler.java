@@ -1,11 +1,7 @@
-package com.standard.demo.webapp.one.config.exception;
+package com.wechat.miniprogram.one.config.exception;
 
-import com.alibaba.fastjson.JSONObject;
-import com.standard.demo.web.core.constant.ErrorEnum;
-import com.standard.demo.web.core.entity.ResponseEntity;
-import com.standard.demo.web.core.utils.CommonUtil;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.apache.shiro.authz.UnauthorizedException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -13,7 +9,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
+import com.alibaba.fastjson.JSONObject;
+import com.wechat.demo.core.constant.ErrorEnum;
+import com.wechat.demo.core.entity.ResponseEntity;
+import com.wechat.demo.core.utils.CommonUtil;
 
 /**
  * @author: zjw
@@ -65,21 +64,5 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(CommonJsonException.class)
 	public ResponseEntity commonJsonExceptionHandler(CommonJsonException commonJsonException) {
 		return commonJsonException.getResultJson();
-	}
-
-	/**
-	 * 权限不足报错拦截
-	 */
-	@ExceptionHandler(UnauthorizedException.class)
-	public ResponseEntity unauthorizedExceptionHandler() {
-		return CommonUtil.errorJson(ErrorEnum.E_502);
-	}
-
-	/**
-	 * 未登录报错拦截 在请求需要权限的接口,而连登录都还没登录的时候,会报此错
-	 */
-	@ExceptionHandler(UnauthenticatedException.class)
-	public ResponseEntity unauthenticatedException() {
-		return CommonUtil.errorJson(ErrorEnum.E_20011);
 	}
 }

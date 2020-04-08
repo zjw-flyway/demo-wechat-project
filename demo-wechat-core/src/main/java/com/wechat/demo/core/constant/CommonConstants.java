@@ -1,4 +1,4 @@
-package com.standard.demo.core.constant;
+package com.wechat.demo.core.constant;
 
 /**
  * @Description 状态码

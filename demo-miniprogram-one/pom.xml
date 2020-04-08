@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>com.wechat.demo</groupId>
-            <artifactId>demo-web-core</artifactId>
+            <artifactId>demo-wechat-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

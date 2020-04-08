@@ -1,12 +1,12 @@
-package com.standard.demo.core.entity;
+package com.wechat.demo.core.entity;
 
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.standard.demo.core.constant.CommonConstants;
-import com.standard.demo.core.enums.DelFlag;
 
+import com.wechat.demo.core.constant.CommonConstants;
+import com.wechat.demo.core.enums.DelFlag;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;

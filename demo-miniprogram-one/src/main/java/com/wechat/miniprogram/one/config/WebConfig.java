@@ -1,4 +1,4 @@
-package com.standard.demo.webapp.one.config;
+package com.wechat.miniprogram.one.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

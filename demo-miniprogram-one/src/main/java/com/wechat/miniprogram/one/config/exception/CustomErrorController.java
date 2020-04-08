@@ -1,13 +1,12 @@
-package com.standard.demo.webapp.one.config.exception;
+package com.wechat.miniprogram.one.config.exception;
 
+import com.wechat.demo.core.constant.ErrorEnum;
+import com.wechat.demo.core.entity.ResponseEntity;
+import com.wechat.demo.core.utils.CommonUtil;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.standard.demo.web.core.constant.ErrorEnum;
-import com.standard.demo.web.core.entity.ResponseEntity;
-import com.standard.demo.web.core.utils.CommonUtil;
 
 /**
  * @author: zjw

@@ -1,4 +1,4 @@
-package com.standard.demo.core.config;
+package com.wechat.demo.core.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
-package com.standard.demo.webapp.one.config.exception;
+package com.wechat.miniprogram.one.config.exception;
 
-import com.standard.demo.web.core.constant.ErrorEnum;
-import com.standard.demo.web.core.entity.ResponseEntity;
+import com.wechat.demo.core.constant.ErrorEnum;
+import com.wechat.demo.core.entity.ResponseEntity;
 
 /**
  * @author: zjw

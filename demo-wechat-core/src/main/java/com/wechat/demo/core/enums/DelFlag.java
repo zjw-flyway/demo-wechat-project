@@ -1,4 +1,4 @@
-package com.standard.demo.core.enums;
+package com.wechat.demo.core.enums;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

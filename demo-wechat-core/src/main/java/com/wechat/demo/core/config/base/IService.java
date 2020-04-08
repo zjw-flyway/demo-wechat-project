@@ -1,4 +1,4 @@
-package com.standard.demo.core.config.base;
+package com.wechat.demo.core.config.base;
 
 import java.io.Serializable;
 import java.util.Collection;
