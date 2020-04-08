@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy/MM/dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: demo-miniprogram-one
+server:
+  port: 18550
+  servlet:
+    session:
+      cookie:
+        name: demo-miniprogram-one
+      timeout: 60m
+    context-path: /demo-miniprogram-one/
+  use-forward-headers: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+dubbo:
+  version: 1.0.0
+
+admin:
+  user:
+    id: 1
