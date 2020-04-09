@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.alibaba.fastjson.JSONObject;
 import com.wechat.demo.core.constant.ErrorEnum;
@@ -19,8 +18,7 @@ import com.wechat.demo.core.utils.CommonUtil;
  * @description: 统一异常拦截
  * @date: 2020/03/20 10:31
  */
-@ControllerAdvice
-@ResponseBody
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -78,6 +76,7 @@ public class GlobalExceptionHandler {
 
 	/**
 	 * session中不存在openId的情况
+	 * 前端应该封装调用http请求的，如果返回的是10001和10002错误的话，就应该再次调用wx.login方法，之后在调用本来请求的方法
 	 * @param openIdMissingException
 	 * @return
 	 */

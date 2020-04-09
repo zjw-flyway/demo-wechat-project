@@ -1,18 +1,20 @@
 package com.wechat.miniprogram.one.controller;
 
-import com.wechat.demo.core.constant.WechatConstants;
-import com.wechat.demo.core.entity.ResponseEntity;
-import com.wechat.miniprogram.one.service.WechatService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.wechat.demo.core.entity.ResponseEntity;
+import com.wechat.demo.core.utils.WechatUtils;
+import com.wechat.miniprogram.one.service.WechatService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Description
@@ -46,7 +48,7 @@ public class WechatController {
 	 */
 	@GetMapping("getOpenId")
 	public ResponseEntity getOpenId(HttpServletRequest request) {
-		return new ResponseEntity(request.getSession().getAttribute(WechatConstants.openId));
+		return new ResponseEntity(WechatUtils.getOpenId(request));
 	}
 
 	/**

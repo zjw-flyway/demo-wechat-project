@@ -1,5 +1,6 @@
 package com.wechat.demo.core.utils;
 
+import com.wechat.demo.core.config.exception.OpenIdMissingException;
 import com.wechat.demo.core.config.exception.SessionKeyTimeoutException;
 import com.wechat.demo.core.constant.WechatConstants;
 import org.apache.commons.codec.binary.Base64;
@@ -55,7 +56,23 @@ public class WechatUtils {
 			log.error("session中不存在sessionkey");
 			throw new SessionKeyTimeoutException();
 		}
+
 		return sessionKey;
+	}
+
+	/**
+	 * 获取openId
+	 * @param request
+	 * @return
+	 */
+	public static String getOpenId(HttpServletRequest request) {
+		String openId = (String) request.getSession().getAttribute(WechatConstants.openId);
+		if (StringUtils.isBlank(openId)) {
+			log.error("session中不存在openId");
+			throw new OpenIdMissingException();
+		}
+
+		return openId;
 	}
 
 	public static void main(String[] args) {
