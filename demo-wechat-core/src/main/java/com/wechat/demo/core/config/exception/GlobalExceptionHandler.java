@@ -1,4 +1,4 @@
-package com.wechat.miniprogram.one.config.exception;
+package com.wechat.demo.core.config.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,4 +65,25 @@ public class GlobalExceptionHandler {
 	public ResponseEntity commonJsonExceptionHandler(CommonJsonException commonJsonException) {
 		return commonJsonException.getResultJson();
 	}
+
+	/**
+	 * sessionKey不存在或超时报错
+	 * @param sessionKeyTimeoutException
+	 * @return
+	 */
+	@ExceptionHandler(SessionKeyTimeoutException.class)
+	public ResponseEntity sessionKeyTimeoutException(SessionKeyTimeoutException sessionKeyTimeoutException) {
+		return sessionKeyTimeoutException.getResultJson();
+	}
+
+	/**
+	 * session中不存在openId的情况
+	 * @param openIdMissingException
+	 * @return
+	 */
+	@ExceptionHandler(OpenIdMissingException.class)
+	public ResponseEntity openIdMissingException(OpenIdMissingException openIdMissingException) {
+		return openIdMissingException.getResultJson();
+	}
+
 }

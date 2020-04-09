@@ -23,12 +23,12 @@ public class Swagger2Config {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-            .apis(RequestHandlerSelectors.basePackage("com.standard.demo")).paths(PathSelectors.any())
+            .apis(RequestHandlerSelectors.basePackage("com.wechat")).paths(PathSelectors.any())
             .build();
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("com.standard.demo.webapp.one接口信息")
-            .description("包含com.standard.demo.webapp.one的所有接口信息").contact("小小张").version("1.0").build();
+        return new ApiInfoBuilder().title("小程序后台脚手架")
+            .description("包含小程序后台脚手架所有接口信息").contact("小小张").version("1.0").build();
     }
 }

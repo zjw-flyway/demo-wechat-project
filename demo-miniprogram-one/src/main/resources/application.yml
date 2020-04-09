@@ -34,9 +34,6 @@ management:
     health:
       show-details: ALWAYS
 
-dubbo:
-  version: 1.0.0
-
-admin:
-  user:
-    id: 1
+wechat:
+  url:
+    getUserInfo: https://api.weixin.qq.com/sns/jscode2session

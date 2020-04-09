@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@SpringBootApplication(scanBasePackages = "com.wechat.demo")
+@SpringBootApplication(scanBasePackages = "com.wechat")
 @MapperScan("com.wechat.miniprogram.one.dao")
 public class DemoMiniprogramOneApplication extends SpringBootServletInitializer {
 

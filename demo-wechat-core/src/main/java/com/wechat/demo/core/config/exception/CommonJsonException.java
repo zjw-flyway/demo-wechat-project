@@ -1,4 +1,4 @@
-package com.wechat.miniprogram.one.config.exception;
+package com.wechat.demo.core.config.exception;
 
 import com.wechat.demo.core.constant.ErrorEnum;
 import com.wechat.demo.core.entity.ResponseEntity;

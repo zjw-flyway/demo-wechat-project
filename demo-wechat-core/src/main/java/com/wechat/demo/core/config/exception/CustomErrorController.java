@@ -1,8 +1,9 @@
-package com.wechat.miniprogram.one.config.exception;
+package com.wechat.demo.core.config.exception;
 
 import com.wechat.demo.core.constant.ErrorEnum;
 import com.wechat.demo.core.entity.ResponseEntity;
 import com.wechat.demo.core.utils.CommonUtil;
+import io.swagger.annotations.Api;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date: 2020/03/20 10:31
  */
 @Controller
+@Api(tags = "默认错误拦截")
 public class CustomErrorController implements ErrorController {
 
 	private static final String ERROR_PATH = "/error";
