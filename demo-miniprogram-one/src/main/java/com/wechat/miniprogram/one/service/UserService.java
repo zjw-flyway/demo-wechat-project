@@ -21,7 +21,7 @@ public interface UserService {
 	 * @param phone
 	 * @return
 	 */
-	User findByPhone(Integer phone);
+	User findByPhone(String phone);
 
 	/**
 	 * 添加用户

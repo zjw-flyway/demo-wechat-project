@@ -26,7 +26,7 @@ public interface UserDao extends BaseMapper<User> {
 	 * @return
 	 */
 	@Select("select * from user where phone=#{phone}")
-	User findByPhone(@Param("phone") Integer phone);
+	User findByPhone(@Param("phone") String phone);
 
 	/**
 	 * 添加用户

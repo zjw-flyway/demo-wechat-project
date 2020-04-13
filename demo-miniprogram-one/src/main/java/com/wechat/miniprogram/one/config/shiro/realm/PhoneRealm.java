@@ -44,15 +44,15 @@ public class PhoneRealm extends ParentRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
 		String phone = usernamePasswordToken.getUsername();
-		User user = userService.findByPhone(Integer.parseInt(phone));
+		User user = userService.findByPhone(phone);
 		if (user == null) {
 			throw new UnknownAccountException();
 		}
 		//if ("2".equals(user.getState())) {
 		//	throw new LockedAccountException();
 		//}
-		String password = user.getPassword();
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(phone, password, getName());
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(phone, user.getPassword(),
+				getName());
 		return simpleAuthenticationInfo;
 	}
 }

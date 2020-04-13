@@ -32,7 +32,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, User> implements U
 	}
 
 	@Override
-	public User findByPhone(Integer phone) {
+	public User findByPhone(String phone) {
 		return userDao.findByPhone(phone);
 	}
 

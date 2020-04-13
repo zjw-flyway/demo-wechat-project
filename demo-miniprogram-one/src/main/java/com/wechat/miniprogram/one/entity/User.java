@@ -42,7 +42,7 @@ public class User extends BaseEntity {
 	/**
 	 * 手机号码
 	 */
-	Integer phone;
+	String phone;
 
 	/**
 	 * openId
