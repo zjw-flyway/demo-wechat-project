@@ -85,4 +85,14 @@ public class GlobalExceptionHandler {
 		return openIdMissingException.getResultJson();
 	}
 
+	/**
+	 * 登录失败报错
+	 * @param loginFailException
+	 * @return
+	 */
+	@ExceptionHandler(LoginFailException.class)
+	public ResponseEntity loginFailException(LoginFailException loginFailException) {
+		return loginFailException.getResultJson();
+	}
+
 }

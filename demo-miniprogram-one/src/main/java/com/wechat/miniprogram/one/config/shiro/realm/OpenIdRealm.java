@@ -1,15 +1,11 @@
 package com.wechat.miniprogram.one.config.shiro.realm;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.annotation.Resource;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -23,10 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @Description
  * @Author zhangjw
- * @Date 2020/4/10 11:48
+ * @Date 2020/4/10 11:46
  */
 @Slf4j
-public class UsernameRealm extends ParentRealm {
+public class OpenIdRealm extends ParentRealm {
 
 	@Resource
 	public UserService userService;
@@ -36,18 +32,7 @@ public class UsernameRealm extends ParentRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		String username = (String) principals.getPrimaryPrincipal();
-		User user = userService.findByUsername(username);
-		// 获取用户角色
-		Set<String> roles = new HashSet<>();
-		// 获取用户权限
-		Set<String> permissions = new HashSet<>();
-
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-		// 设置权限
-		simpleAuthorizationInfo.setStringPermissions(permissions);
-		// 设置角色
-		simpleAuthorizationInfo.setRoles(roles);
 		return simpleAuthorizationInfo;
 	}
 
@@ -57,16 +42,14 @@ public class UsernameRealm extends ParentRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
-		String username = usernamePasswordToken.getUsername();// 用户输入用户名
-		User user = userService.findByUsername(username);// 根据用户输入用户名查询该用户.
+		String openId = usernamePasswordToken.getUsername();
+		User user = userService.findByOpenId(openId);
+
 		if (user == null) {
-			throw new UnknownAccountException();
+			userService.addUser(openId);
 		}
-		//if ("2".equals(user.getState())) {
-		//	throw new LockedAccountException();
-		//}
-		String password = user.getPassword();
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(username, password, getName());
+
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(openId, "123456", getName());
 		return simpleAuthenticationInfo;
 	}
 }

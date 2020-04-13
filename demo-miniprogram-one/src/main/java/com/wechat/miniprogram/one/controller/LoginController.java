@@ -1,15 +1,23 @@
 package com.wechat.miniprogram.one.controller;
 
+import com.wechat.demo.core.config.exception.LoginFailException;
+import com.wechat.demo.core.constant.ErrorEnum;
+import com.wechat.demo.core.enums.LoginType;
 import com.wechat.miniprogram.one.config.shiro.WechatPasswordToken;
 import com.wechat.demo.core.entity.ResponseEntity;
 import com.wechat.demo.core.utils.CommonUtil;
+import com.wechat.miniprogram.one.service.WechatService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description
@@ -22,22 +30,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class LoginController {
 
+	@Resource
+	private WechatService wechatService;
+
 	/**
 	 * 登录
-	 * @param username
-	 * @param rememberMe
-	 * @param password
-	 * @param loginType
 	 * @return
 	 */
-	@GetMapping("/login")
-	public ResponseEntity login(String username, Boolean rememberMe, String password, String loginType) {
-		Subject subject = SecurityUtils.getSubject();
-		WechatPasswordToken token = new WechatPasswordToken(username, password, loginType);
-
-		if (rememberMe != null) {
-			token.setRememberMe(rememberMe);
+	@GetMapping("/openId/login")
+	@ApiImplicitParam(name = "code", type = "String", required = true)
+	public ResponseEntity login(String code, HttpServletRequest request) {
+		ResponseEntity responseEntity = wechatService.code2Session(code, request);
+		if (responseEntity.getCode() != ErrorEnum.SUCCESS_CODE.getErrorCode()) {
+			return responseEntity;
 		}
+
+		//shiro进行登录操作
+		String openId = (String) responseEntity.getData();
+		Subject subject = SecurityUtils.getSubject();
+		WechatPasswordToken token = new WechatPasswordToken(openId, "123456", LoginType.OPENID.getType());
 
 		try {
 			// 登录
@@ -59,7 +70,7 @@ public class LoginController {
 			//	return new ReturnMap().fail().message("未知异常！");
 			//}
 		} catch (Exception e) {
-			log.error("登录失败");
+			throw new LoginFailException();
 		}
 		return CommonUtil.successJson("登录成功");
 	}

@@ -12,9 +12,7 @@ server:
   port: 18550
   servlet:
     session:
-      cookie:
-        name: demo-miniprogram-one
-      timeout: 60m
+      timeout: 30m
     context-path: /demo-miniprogram-one/
   use-forward-headers: true
 

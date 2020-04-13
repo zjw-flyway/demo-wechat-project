@@ -67,6 +67,7 @@ public class WechatUtils {
 	 */
 	public static String getOpenId(HttpServletRequest request) {
 		String openId = (String) request.getSession().getAttribute(WechatConstants.openId);
+		log.info("openId:{}", openId);
 		if (StringUtils.isBlank(openId)) {
 			log.error("session中不存在openId");
 			throw new OpenIdMissingException();

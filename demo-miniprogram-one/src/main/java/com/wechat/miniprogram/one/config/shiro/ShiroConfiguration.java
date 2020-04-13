@@ -10,20 +10,18 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import com.google.common.collect.ImmutableSet;
-import com.wechat.miniprogram.one.config.shiro.realm.NicknameRealm;
-import com.wechat.miniprogram.one.config.shiro.realm.UsernameRealm;
+import com.wechat.miniprogram.one.config.shiro.realm.OpenIdRealm;
+import com.wechat.miniprogram.one.config.shiro.realm.PhoneRealm;
 
 /**
  * @author: zjw
@@ -49,7 +47,9 @@ public class ShiroConfiguration {
 		/* 过滤链定义，从上向下顺序执行，一般将 / ** 放在最为下边:这是一个坑呢，一不小心代码就不好使了;shiro上面的优先级比下面的高；
 		 authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问 */
 		filterChainDefinitionMap.put("/", "anon");
-		filterChainDefinitionMap.put("/login/login", "anon");
+		filterChainDefinitionMap.put("/login/openId/login", "anon");
+		filterChainDefinitionMap.put("/login/phone/login", "anon");
+		//filterChainDefinitionMap.put("/wechat/getOpenId", "anon");
 		filterChainDefinitionMap.put("/login/logout", "anon");
 		filterChainDefinitionMap.put("/error", "anon");
 
@@ -69,21 +69,6 @@ public class ShiroConfiguration {
 		return shiroFilterFactoryBean;
 	}
 
-	@Bean
-	public SessionManager sessionManager() {
-		DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-		//sessionManager.setSessionDAO(redisSessionDao());
-		return sessionManager;
-	}
-
-	///**
-	// * 定义redis session
-	// * @return
-	// */
-	//@Bean
-	//public RedisSessionDao redisSessionDao() {
-	//	return new RedisSessionDao();
-	//}
 
 	/**
 	 * 凭证匹配器 （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了 所以我们需要修改下doGetAuthenticationInfo中的代码; ） 可以扩展凭证匹配器，实现
@@ -102,8 +87,8 @@ public class ShiroConfiguration {
 	 * Shiro Realm 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的
 	 */
 	@Bean
-	public UsernameRealm usernameRealm() {
-		UsernameRealm userRealm = new UsernameRealm();
+	public PhoneRealm phoneRealm() {
+		PhoneRealm userRealm = new PhoneRealm();
 		// 密码要加密
 		userRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return userRealm;
@@ -113,10 +98,10 @@ public class ShiroConfiguration {
 	 * Shiro Realm 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的
 	 */
 	@Bean
-	public NicknameRealm nicknameRealm() {
-		NicknameRealm nicknameRealm = new NicknameRealm();
-		// 密码要加密
-		nicknameRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+	public OpenIdRealm openIdRealm() {
+		OpenIdRealm nicknameRealm = new OpenIdRealm();
+		// openId不加密的，所以这里的加密的方法注释掉就好了
+		//nicknameRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return nicknameRealm;
 	}
 
@@ -140,9 +125,8 @@ public class ShiroConfiguration {
 	public SecurityManager securityManager() {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setAuthenticator(wechatModularRealmAuthenticator());
-		Set<Realm> realmSet = ImmutableSet.of(usernameRealm(), nicknameRealm());
+		Set<Realm> realmSet = ImmutableSet.of(phoneRealm(), openIdRealm());
 		securityManager.setRealms(realmSet);
-		securityManager.setSessionManager(sessionManager());
 		return securityManager;
 	}
 

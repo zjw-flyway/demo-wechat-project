@@ -11,15 +11,22 @@ public interface UserService {
 
 	/**
 	 * 根据用户名查找用户
-	 * @param username
+	 * @param openId
 	 * @return
 	 */
-	User findByUsername(String username);
+	User findByOpenId(String openId);
 
 	/**
-	 * 根据昵称查找用户
-	 * @param nickName
+	 * 根据手机号码查找用户
+	 * @param phone
 	 * @return
 	 */
-	User findByNickname(String nickName);
+	User findByPhone(Integer phone);
+
+	/**
+	 * 添加用户
+	 * @param openId
+	 * @return
+	 */
+	int addUser(String openId);
 }

@@ -69,7 +69,7 @@ public class WechatServiceImpl implements WechatService {
 		session.setAttribute(WechatConstants.unionid, unionId);
 
 		log.info("code:{}登录成功，获取的信息为：{}，返回的sessionid为：{}", code, result, session.getId());
-		return CommonUtil.successJson(session.getId());
+		return CommonUtil.successJson(openId);
 	}
 
 	@Override
